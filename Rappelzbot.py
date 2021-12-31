@@ -9,7 +9,7 @@ import pyodbc
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
-DISCORD_TOKEN = 'OTIxNDU5MjkwMjczODk4NTA3.YbzN1g.o0hwdmyl98LZ7J0kCYuILFWpK6Y'
+DISCORD_TOKEN = ''
 
 
 lasttime = 0
