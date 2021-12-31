@@ -1,4 +1,3 @@
-
 import os
 import discord
 import pyodbc
@@ -8,13 +7,18 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 DISCORD_TOKEN = ""
+conn = None # will later represent the connection to the database
 
 
 
 client = discord.Client()
 
-@client.event 
+@client.event
 async def on_ready():
+    '''
+    this method is called when the bot is ready to do bot stuff
+    sets up a connection to the player database and logs status to console
+    '''
     print("Connecting to SQL server.")
     try:
         global conn
@@ -30,9 +34,12 @@ async def on_ready():
 
 
 
-@client.event   
+@client.event
 async def on_message(msg):
-
+    '''
+    on message recieve, process message.
+    this is the bulk of the bot's functionality
+    '''
 
     if msg.content == "!help":
         await msg.channel.send(f"The current commands are:\n!gold\n!lvl")
@@ -51,7 +58,7 @@ async def on_message(msg):
 
 
         for i, (x,y) in enumerate(zip(name,level)):
-            if i ==3:
+            if i == 3:
                 break
             message = (f"{message}\nRank{i+1}\nname : {x:10} level: {y}")
         message = (f"```{message}```")
@@ -71,7 +78,7 @@ async def on_message(msg):
         for row in data:
             name.append(row.name)
             gold.append(row.gold)
-        
+
         for i, (x,y) in enumerate(zip(name,gold)):
             if i == 3:
                 break
