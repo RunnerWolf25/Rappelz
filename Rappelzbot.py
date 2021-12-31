@@ -1,5 +1,7 @@
+from logging import currentframe
 import os
 import discord
+import time
 from dotenv import load_dotenv
 import pyodbc
 
@@ -7,10 +9,10 @@ import pyodbc
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
-DISCORD_TOKEN = 'your discord bot token'
+DISCORD_TOKEN = 'OTIxNDU5MjkwMjczODk4NTA3.YbzN1g.o0hwdmyl98LZ7J0kCYuILFWpK6Y'
 
 
-
+lasttime = 0
 conn = None # will later represent the connection to the database
 
 
@@ -33,7 +35,6 @@ async def on_ready():
     except:
         print('Couldn\'t connect to the SQL server.')
         quit()
-
     print(f'Loaded successfully as {client.user}')
 
 
@@ -44,9 +45,23 @@ async def on_message(msg):
     on message recieve, process message.
     this is the bulk of the bot's functionality
     '''
-
+# Help command -------------------------------------------------------------
     if msg.content == '!help':
         await msg.channel.send('The current commands are:\n!gold\n!lvl')
+        return
+# Help command -------------------------------------------------------------
+
+
+#Time block ( Anything past here has a time block of 10 seconds if it has time.time() on the lasttime 
+# defined )
+    curenttime = time.time()
+    global lasttime
+    
+    if (lasttime + 10) >= (curenttime):
+        return
+#Time block------------------------------------
+
+
 #------------------------------------------<lvl>----------------------------------
     if msg.content == '!lvl':
         cursor = conn.cursor()
@@ -66,6 +81,8 @@ async def on_message(msg):
             message = (f'{message}\nRank {rank+1}\nname : {x:10} level: {y}')
         message = (f'```{message}```')
         await msg.channel.send(message)
+        lasttime = time.time()
+        return
 #------------------------------------------</lvl>---------------------------------
 
 
@@ -88,6 +105,8 @@ async def on_message(msg):
 
         message = f'```{message}```'
         await msg.channel.send(message)
+        lasttime = time.time()
+        return
 #------------------------------------------</Gold>---------------------------------
 
 #run discord bot
