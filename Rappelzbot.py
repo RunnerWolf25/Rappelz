@@ -7,7 +7,7 @@ import pyodbc
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
-DISCORD_TOKEN = ''
+DISCORD_TOKEN = 'your discord bot token'
 
 
 
@@ -50,21 +50,20 @@ async def on_message(msg):
 #------------------------------------------<lvl>----------------------------------
     if msg.content == '!lvl':
         cursor = conn.cursor()
-        cursor.execute('SELECT name , lv from dbo.Character order by lv DESC')
+        cursor.execute('SELECT TOP(3) name , lv from dbo.Character order by lv DESC')
         data    = cursor.fetchall()
         name    = []
         level   = []
-        message = ''
+        message = str()
 
         for row in data:
             name.append(row.name)
             level.append(row.lv)
 
 
-        for i, (x, y) in enumerate(zip(name,level)):
-            if i == 3:
-                break
-            message = (f'{message}\nRank{i+1}\nname : {x:10} level: {y}')
+        for rank, (x, y) in enumerate(zip(name,level)):
+
+            message = (f'{message}\nRank {rank+1}\nname : {x:10} level: {y}')
         message = (f'```{message}```')
         await msg.channel.send(message)
 #------------------------------------------</lvl>---------------------------------
@@ -73,7 +72,7 @@ async def on_message(msg):
 #------------------------------------------<Gold>---------------------------------
     if msg.content == '!gold':
         cursor = conn.cursor()
-        cursor.execute('SELECT name , gold from dbo.Character order by gold DESC')
+        cursor.execute('SELECT TOP(3) name , gold from dbo.Character order by gold DESC')
         data = cursor.fetchall()
         name = []
         gold = []
@@ -83,10 +82,9 @@ async def on_message(msg):
             name.append(row.name)
             gold.append(row.gold)
 
-        for i, (x, y) in enumerate(zip(name, gold)):
-            if i == 3:
-                break
-            message = (f'{message}\nRank{i+1:3}\n name: {x:10} ruppee: {y:3}')
+        for rank, (x, y) in enumerate(zip(name, gold)):
+
+            message = (f'{message}\nRank{rank+1:3}\n name: {x:10} ruppee: {y:3}')
 
         message = f'```{message}```'
         await msg.channel.send(message)
