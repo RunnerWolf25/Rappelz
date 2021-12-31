@@ -9,7 +9,9 @@ import pyodbc
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
-DISCORD_TOKEN = ''
+#Reads the file that's defined below here, If it's in the same folder only add the name + extension)
+with open("Token.txt") as r:
+    DISCORD_TOKEN = (r.readline())
 
 
 lasttime = 0
