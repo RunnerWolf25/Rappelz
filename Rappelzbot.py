@@ -3,14 +3,18 @@ import discord
 from dotenv import load_dotenv
 import pyodbc
 
+# loading constants from environment variables
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 DISCORD_TOKEN = ''
+
+
+
 conn = None # will later represent the connection to the database
 
 
-
+# define discord bot
 client = discord.Client()
 
 @client.event
@@ -42,7 +46,7 @@ async def on_message(msg):
     '''
 
     if msg.content == '!help':
-        await msg.channel.send(f'The current commands are:\n!gold\n!lvl')
+        await msg.channel.send('The current commands are:\n!gold\n!lvl')
 #------------------------------------------<lvl>----------------------------------
     if msg.content == '!lvl':
         cursor = conn.cursor()
@@ -88,4 +92,5 @@ async def on_message(msg):
         await msg.channel.send(message)
 #------------------------------------------</Gold>---------------------------------
 
-client.run(DISCORD_TOKEN) 
+#run discord bot
+client.run(DISCORD_TOKEN)
