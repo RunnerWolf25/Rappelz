@@ -56,63 +56,60 @@ async def on_message(msg):
         return
 # Help command -------------------------------------------------------------
 
-
 # Time block ( Anything past here has a time block of 10 seconds if it has time.time() on the lasttime 
 # defined )
+# Time block------------------------------------
     curenttime = time.time()
     global lasttime
-    
     if (lasttime + 10) >= (curenttime):
         return
-# Time block------------------------------------
 
-
+    match msg.content:
 #------------------------------------------<lvl>----------------------------------
-    if msg.content == '!lvl':
-        cursor = conn.cursor()
-        cursor.execute('SELECT TOP(3) name , lv from dbo.Character order by lv DESC')
-        data    = cursor.fetchall()
-        name    = []
-        level   = []
-        message = str()
+        case `!lvl`:
+            cursor = conn.cursor()
+            cursor.execute('SELECT TOP(3) name , lv from dbo.Character order by lv DESC')
+            data    = cursor.fetchall()
+            name    = []
+            level   = []
+            message = str()
 
-        for row in data:
-            name.append(row.name)
-            level.append(row.lv)
+            for row in data:
+                name.append(row.name)
+                level.append(row.lv)
 
 
-        for rank, (x, y) in enumerate(zip(name,level)):
+            for rank, (x, y) in enumerate(zip(name,level)):
 
-            message = (f'{message}\nRank {rank+1}\nname : {x:10} level: {y}')
-        message = (f'```{message}```')
-        await msg.channel.send(message)
-        lasttime = time.time()
-        return
+                message = (f'{message}\nRank {rank+1}\nname : {x:10} level: {y}')
+            message = (f'```{message}```')
+            await msg.channel.send(message)
 #------------------------------------------</lvl>---------------------------------
 
-
 #------------------------------------------<Gold>---------------------------------
-    if msg.content == '!gold':
-        cursor = conn.cursor()
-        cursor.execute('SELECT TOP(3) name , gold from dbo.Character order by gold DESC')
-        data = cursor.fetchall()
-        name = []
-        gold = []
-        message = str()
+        case `!gold`:
+            cursor = conn.cursor()
+            cursor.execute('SELECT TOP(3) name , gold from dbo.Character order by gold DESC')
+            data = cursor.fetchall()
+            name = []
+            gold = []
+            message = str()
 
-        for row in data:
-            name.append(row.name)
-            gold.append(row.gold)
+            for row in data:
+                name.append(row.name)
+                gold.append(row.gold)
 
-        for rank, (x, y) in enumerate(zip(name, gold)):
+            for rank, (x, y) in enumerate(zip(name, gold)):
 
-            message = (f'{message}\nRank{rank+1:3}\n name: {x:10} ruppee: {y:3}')
+                message = (f'{message}\nRank{rank+1:3}\n name: {x:10} ruppee: {y:3}')
 
-        message = f'```{message}```'
-        await msg.channel.send(message)
-        lasttime = time.time()
-        return
+            message = f'```{message}```'
+            await msg.channel.send(message)
 #------------------------------------------</Gold>---------------------------------
+
+    lasttime = time.time()
+
+
 
 # run discord bot
 client.run(DISCORD_TOKEN)
