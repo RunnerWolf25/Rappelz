@@ -4,10 +4,17 @@ import discord
 import time
 import pyodbc
 
+# try to get token from file stored in the base directory.
+# fail gracefully if file not found
+token_file = 'Token.txt'
+try:
+    # Reads the file that's defined below here, If it's in the same folder only add the name + extension)
+    with open(token_file) as r:
+        DISCORD_TOKEN = (r.readline())
+except OSError as err:
+    print(f'[ERROR]: {token_file} not found')
+    quit()
 
-#Reads the file that's defined below here, If it's in the same folder only add the name + extension)
-with open("Token.txt") as r:
-    DISCORD_TOKEN = (r.readline())
 
 
 lasttime = 0
