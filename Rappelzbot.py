@@ -17,8 +17,8 @@ except OSError as err:
 
 
 
-lasttime = 0
-conn = None # will later represent the connection to the database
+lasttime = 0 # stores the last unix timestamp when the bot accessed the database to prevent spam
+conn = None  # will later represent the connection to the database
 
 
 # define discord bot
