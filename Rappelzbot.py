@@ -1,14 +1,10 @@
-from logging import currentframe
-import os
+from logging import currentframe # Likely not needed.
+import os                        # likely not needed
 import discord
 import time
-from dotenv import load_dotenv
 import pyodbc
 
-# loading constants from environment variables
-load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
-GUILD = os.getenv('DISCORD_GUILD')
+
 #Reads the file that's defined below here, If it's in the same folder only add the name + extension)
 with open("Token.txt") as r:
     DISCORD_TOKEN = (r.readline())
