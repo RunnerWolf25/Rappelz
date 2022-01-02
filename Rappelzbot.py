@@ -57,14 +57,14 @@ async def on_message(msg):
 # Help command -------------------------------------------------------------
 
 
-#Time block ( Anything past here has a time block of 10 seconds if it has time.time() on the lasttime 
+# Time block ( Anything past here has a time block of 10 seconds if it has time.time() on the lasttime 
 # defined )
     curenttime = time.time()
     global lasttime
     
     if (lasttime + 10) >= (curenttime):
         return
-#Time block------------------------------------
+# Time block------------------------------------
 
 
 #------------------------------------------<lvl>----------------------------------
@@ -114,5 +114,5 @@ async def on_message(msg):
         return
 #------------------------------------------</Gold>---------------------------------
 
-#run discord bot
+# run discord bot
 client.run(DISCORD_TOKEN)
